@@ -6,8 +6,16 @@ const cors = require('cors');
 
 const app = express();
 
-// CORS
-app.use(cors({ origin: '*', credentials: true }));
+// ✅ CORRECT CORS CONFIGURATION
+app.use(cors({ 
+  origin: '*',
+  credentials: false,  // ✅ Changed from true
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// ✅ Handle preflight requests
+app.options('*', cors());
 
 // Middleware
 app.use(express.json({ limit: '50mb' }));
